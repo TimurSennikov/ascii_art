@@ -1,31 +1,9 @@
 import os
 
-from rich.console import Console
 from args import args
 from pynput import keyboard
 
 from img import *
-
-console = Console()
-
-image_formats = ["png", "jpeg", "jpg"]
-
-def show(file):
-    art = draw(file, args.cols if args.cols else 80, 0.43)
-    for line in art:
-        for s in line:
-            symb, style = s
-            console.print(symb, style=style, end="")
-        console.print("", end="\n")
-
-def save_f(file, out):
-    art = draw(file, args.cols if args.cols else 80, 0.43)
-    with open(out, "w") as f:
-        for line in art:
-            a = ""
-            for s in line:
-                a += s[0]
-            f.write(a + '\n')
 
 def main():
     if not os.path.exists(args.file) and not args.file.startswith("http"):
@@ -53,7 +31,7 @@ def main():
                     break
     else:
         if args.save:
-            save_f(args.file, os.path.join(args.save, args.file + ".txt"))
+            save_f(args.file, args.save)
         else:
             show(args.file)
 

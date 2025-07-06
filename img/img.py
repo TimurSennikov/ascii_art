@@ -8,7 +8,7 @@ from .avg import *
 
 gscale = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. "
 
-def draw(imgn: str, cols, scale):
+def draw(imgn: str, cols, scale, color=True):
     img = Image.open(io.BytesIO(requests.get(imgn).content) if imgn.startswith("http") else imgn)
 
     W, H = img.size
@@ -42,6 +42,6 @@ def draw(imgn: str, cols, scale):
             cimg = img.crop((x1, y1, x2, y2))
             brightness = get_average_brightness(cimg)
 
-            asc[j].append((gscale[int((brightness*len(gscale)-1)/255)], get_average_color(cimg)))
+            asc[j].append((gscale[int((brightness*len(gscale)-1)/255)], get_average_color(cimg) if color else "rgb(255,255,255)"))
 
     return asc
